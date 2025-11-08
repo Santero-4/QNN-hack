@@ -15,6 +15,10 @@ import torchvision
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 import numpy as np
+from time import gmtime, strftime
+
+x = strftime("%H:%M:%S", gmtime())
+print("Start time: ", x)
 
 # ================== Config & Hyperparameters ==================
 BATCH_SIZE = 64
@@ -126,7 +130,7 @@ def train(
         avg_val_loss = val_loss / len(validloader.dataset)
         val_acc = 100. * correct / total
         valid_losses.append(avg_val_loss)
-        print(f"Epoch {epoch+1}/{epochs} - Train Loss: {avg_train_loss:.4f} - Val Loss: {avg_val_loss:.4f} - Val Acc: {val_acc:.2f}%")
+        print(f"Epoch {epoch+1}/{epochs} - Train Loss: {avg_train_loss:.4f} - Val Loss: {avg_val_loss:.4f} - Val Acc: {val_acc:.2f}%, Current time: ", strftime("%H:%M:%S", gmtime()))
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             torch.save(model.state_dict(), 'best_model.pth')
@@ -165,6 +169,7 @@ def main():
     plt.legend()
     plt.show()
     print(f"Final Test Accuracy: {acc:.2f}%")
+    print("End time: ", strftime("%H:%M:%S", gmtime()))
 
 if __name__ == '__main__':
     main()
